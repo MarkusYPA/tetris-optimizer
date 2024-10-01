@@ -111,6 +111,10 @@ func placeTetros(side int, tetros []tetro) square {
 	return square
 }
 
+func sideLen(tets []tetro) int {
+	return int(math.Sqrt(float64(len(tets) * 4)))
+}
+
 // main reads an input file and prints found tetronominoes in as small
 // a square as possible
 func main() {
@@ -127,6 +131,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	fmt.Println(string(bytes))
+
 	bigTetros := getBigTetros(string(bytes))
 	if !checkBigTetros(bigTetros) {
 		fmt.Println("ERROR")
@@ -135,7 +141,7 @@ func main() {
 	tetros := makeTetros(bigTetros) // The given tetrominoes in smallest possible rectangles
 
 	// Minimum side length is the square root of the number of squares in all tetros
-	side := int(math.Sqrt(float64(len(tetros) * 4)))
+	side := sideLen(tetros)
 
 	square := placeTetros(side, tetros)
 

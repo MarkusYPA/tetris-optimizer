@@ -42,7 +42,7 @@ func getBigTetros(s string) [][]string {
 				squares[sqIndex][sqRow] += string(r)
 			} else {
 				// Put letters in instead of #
-				squares[sqIndex][sqRow] += string('A' + sqIndex)
+				squares[sqIndex][sqRow] += string(rune('A' + sqIndex))
 			}
 		}
 
