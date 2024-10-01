@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"math"
 	"os"
 )
 
@@ -19,7 +20,7 @@ func getPlacements(t tetro, side int) []place {
 	return places
 }
 
-// placeIsLegal tells if there's room in the square for the tetronomino at a given place
+// placeIsLegal tells if the tetronomino fits in a given place
 func placeIsLegal(t tetro, plc place, sq square) bool {
 	for i, row := range t {
 		for j, r := range row {
@@ -32,40 +33,51 @@ func placeIsLegal(t tetro, plc place, sq square) bool {
 	return true
 }
 
-// placeTetros puts tetronominos into as small a square as possible
+// placeTetros puts tetronominoes into as small a square as possible
 func placeTetros(side int, tetros []tetro) square {
 	square := newSquare(side)
 
+	lengthTet := len(tetros)
 	tetroI := 0        // Index of current tetromino
 	var curTet tetro   // Current tetromino
 	var places []place // Slice of possible coordinates of a tetromino's upper left corner inside a square
 	placeI := 0        // Index of currrent coordinate
+	var lengthPlcs int
 
 	allPlacements := [][]place{}
-	for _, te := range tetros {
-		allPlacements = append(allPlacements, getPlacements(te, side))
+	placementLenghts := make([]int, len(tetros))
+
+	for _, tet := range tetros {
+		allPlacements = append(allPlacements, getPlacements(tet, side))
+	}
+	for i, pls := range allPlacements {
+		placementLenghts[i] = len(pls)
 	}
 
 	// Slice of coordinates in current solution, used with placeI
-	foundPlaces := make([]int, len(tetros))
+	foundPlaces := make([]int, lengthTet)
 
 	// loop util a solution is found
 	for {
 		// solution complete, exit loop
-		if tetroI > len(tetros)-1 {
+		if tetroI > lengthTet-1 {
 			break
 		}
 
 		curTet = tetros[tetroI]
 		places = allPlacements[tetroI]
+		lengthPlcs = placementLenghts[tetroI]
 
 		// all places failed for first tetro, expanding square
-		if tetroI == 0 && placeI > len(places)-1 {
+		if tetroI == 0 && placeI > lengthPlcs-1 {
 			side++
 
 			allPlacements = [][]place{}
 			for _, te := range tetros {
 				allPlacements = append(allPlacements, getPlacements(te, side))
+				for i, pls := range allPlacements {
+					placementLenghts[i] = len(pls)
+				}
 			}
 
 			square = newSquare(side)
@@ -75,7 +87,7 @@ func placeTetros(side int, tetros []tetro) square {
 		}
 
 		// current tetro can't fit, go back to previous tetro
-		if placeI > len(places)-1 {
+		if placeI > lengthPlcs-1 {
 			tetroI--
 			placeI = foundPlaces[tetroI] + 1
 			foundPlaces[tetroI] = 0
@@ -99,10 +111,9 @@ func placeTetros(side int, tetros []tetro) square {
 	return square
 }
 
-// main reads an iput file and prints found tetronominos in as small
+// main reads an input file and prints found tetronominoes in as small
 // a square as possible
 func main() {
-	// open and read the file from the first argument
 	tetrosFile, err := os.Open(os.Args[1])
 	if err != nil {
 		fmt.Println(err.Error())
@@ -121,18 +132,10 @@ func main() {
 		fmt.Println("ERROR")
 		return
 	}
-	tetros := makeTetros(bigTetros) // The given tetrominos in smallest possible rectangles
+	tetros := makeTetros(bigTetros) // The given tetrominoes in smallest possible rectangles
 
-	// start with a square the size of the largest tetro
-	side := 0
-	for _, t := range tetros {
-		if t.width() > side {
-			side = t.width()
-		}
-		if t.height() > side {
-			side = t.height()
-		}
-	}
+	// Minimum side length is the square root of the number of squares in all tetros
+	side := int(math.Sqrt(float64(len(tetros) * 4)))
 
 	square := placeTetros(side, tetros)
 

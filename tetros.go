@@ -101,7 +101,7 @@ func makeTetros(squares [][]string) []tetro {
 	return tetros
 }
 
-// checkBigTetros return false if any of the tetroniminos are invalid
+// checkBigTetros returns false if any of the tetroniminoes are invalid
 func checkBigTetros(bts [][]string) bool {
 
 	// check if all tetronominos have 4 cells
@@ -152,7 +152,7 @@ func checkBigTetros(bts [][]string) bool {
 		ones := 0
 		for _, ad := range adjoiningDatas {
 			if ad == 0 {
-				// all cells must have orthogonal neighbors
+				// all cells must have orthogonal neighbours
 				return false
 			}
 			if ad == 1 {
@@ -160,7 +160,7 @@ func checkBigTetros(bts [][]string) bool {
 			}
 		}
 
-		// max three cells are allowed 1 adjoining cell
+		// max three cells are allowed only 1 neighbour
 		if ones > 3 {
 			return false
 		}
