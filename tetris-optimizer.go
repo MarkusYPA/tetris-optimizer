@@ -131,8 +131,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(string(bytes))
-
 	bigTetros := getBigTetros(string(bytes))
 	if !checkBigTetros(bigTetros) {
 		fmt.Println("ERROR")
