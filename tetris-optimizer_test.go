@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+	"os"
 	"testing"
 )
 
@@ -16,61 +18,69 @@ type testCaseGood struct {
 	expected int
 }
 
+func fileToString(s string) string {
+	file, err := os.ReadFile(s)
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+	return string(file)
+}
+
 var testCasesBigTetros = []testCaseBad{
 	{
 		name:     "bad 00",
-		input:    bad00,
+		input:    fileToString("testcases/bad00.txt"),
 		expected: false,
 	},
 
 	{
 		name:     "bad 01",
-		input:    bad01,
+		input:    fileToString("testcases/bad01.txt"),
 		expected: false,
 	},
 	{
 		name:     "bad 02",
-		input:    bad02,
+		input:    fileToString("testcases/bad02.txt"),
 		expected: false,
 	},
 	{
 		name:     "bad 03",
-		input:    bad03,
+		input:    fileToString("testcases/bad03.txt"),
 		expected: false,
 	},
 	{
 		name:     "bad 04",
-		input:    bad04,
+		input:    fileToString("testcases/bad04.txt"),
 		expected: false,
 	},
 	{
 		name:     "bad format",
-		input:    bad05,
+		input:    fileToString("testcases/bad05.txt"),
 		expected: false,
 	},
 	{
 		name:     "good 00",
-		input:    good00,
+		input:    fileToString("testcases/good00.txt"),
 		expected: true,
 	},
 	{
 		name:     "good 01",
-		input:    good01,
+		input:    fileToString("testcases/good01.txt"),
 		expected: true,
 	},
 	{
 		name:     "good 02",
-		input:    good02,
+		input:    fileToString("testcases/good02.txt"),
 		expected: true,
 	},
 	{
 		name:     "good 03",
-		input:    good03,
+		input:    fileToString("testcases/good03.txt"),
 		expected: true,
 	},
 	{
 		name:     "good hard",
-		input:    goodHard,
+		input:    fileToString("testcases/goodHard.txt"),
 		expected: true,
 	},
 }
@@ -78,28 +88,28 @@ var testCasesBigTetros = []testCaseBad{
 var testCasesGood = []testCaseGood{
 	{
 		name:     "good 00",
-		input:    makeTetros(getBigTetros(good00)),
+		input:    makeTetros(getBigTetros(fileToString("testcases/good00.txt"))),
 		expected: 0,
 	},
 	{
 		name:     "good 01",
-		input:    makeTetros(getBigTetros(good01)),
+		input:    makeTetros(getBigTetros(fileToString("testcases/good01.txt"))),
 		expected: 9,
 	},
 	{
 		name:     "good 02",
-		input:    makeTetros(getBigTetros(good02)),
+		input:    makeTetros(getBigTetros(fileToString("testcases/good02.txt"))),
 		expected: 4,
 	},
 	{
 		name:     "good 03",
-		input:    makeTetros(getBigTetros(good03)),
+		input:    makeTetros(getBigTetros(fileToString("testcases/good03.txt"))),
 		expected: 5,
 	},
 	// The last case takes ~80 seconds to complete
 	/* 	{
 		name:     "good hard",
-		input:    makeTetros(getBigTetros(goodHard)),
+		input:    makeTetros(getBigTetros(fileToString("testcases/goodHard.txt"))),
 		expected: 1,
 	}, */
 }

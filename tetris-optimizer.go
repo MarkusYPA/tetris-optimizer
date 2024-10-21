@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"math"
 	"os"
 )
@@ -118,14 +117,12 @@ func sideLen(tets []tetro) int {
 // main reads an input file and prints found tetronominoes in as small
 // a square as possible
 func main() {
-	tetrosFile, err := os.Open(os.Args[1])
-	if err != nil {
-		fmt.Println(err.Error())
+	if len(os.Args) != 2 {
+		fmt.Println("Provide one text file as argument")
 		os.Exit(1)
 	}
-	defer tetrosFile.Close()
 
-	bytes, err := io.ReadAll(tetrosFile)
+	bytes, err := os.ReadFile(os.Args[1])
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
