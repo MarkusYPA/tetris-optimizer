@@ -40,7 +40,7 @@ func placeTetros(side int, tetros []tetro) square {
 	tetroI := 0        // Index of current tetromino
 	var curTet tetro   // Current tetromino
 	var places []place // Slice of possible coordinates of a tetromino's upper left corner inside a square
-	placeI := 0        // Index of currrent coordinate
+	placeI := 0        // Index of current coordinate
 	var lengthPlcs int
 
 	allPlacements := [][]place{}
@@ -74,9 +74,9 @@ func placeTetros(side int, tetros []tetro) square {
 			allPlacements = [][]place{}
 			for _, te := range tetros {
 				allPlacements = append(allPlacements, getPlacements(te, side))
-				for i, pls := range allPlacements {
-					placementLenghts[i] = len(pls)
-				}
+			}
+			for i, pls := range allPlacements {
+				placementLenghts[i] = len(pls)
 			}
 
 			square = newSquare(side)

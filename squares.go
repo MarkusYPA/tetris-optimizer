@@ -30,7 +30,6 @@ func fillSquare(t tetro, plc place, sq square) square {
 // clearSquare removes a tetronomino from the square by index
 func clearSquare(t int, sq square) square {
 	sqRunes := squareToRunes(sq)
-
 	for i, row := range sqRunes {
 		for j, r := range row {
 			if r == rune(int('A')+t) {
