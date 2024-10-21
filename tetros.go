@@ -61,14 +61,14 @@ func emptyRow(s string) bool {
 	return others == 0
 }
 
-// makeTetros creates a slice of tetros from 4x4 squares
-func makeTetros(squares [][]string) []tetro {
+// makeTetros creates a slice of different sized rectangle tetros from 4x4 squares
+func makeTetros(bts [][]string) []tetro {
 	tetros := []tetro{}
 
-	for _, sq := range squares {
+	for _, bt := range bts {
 		// list of rows with content
 		rowsToKeep := []int{}
-		for j, row := range sq {
+		for j, row := range bt {
 			if !emptyRow(row) {
 				rowsToKeep = append(rowsToKeep, j)
 			}
@@ -77,7 +77,7 @@ func makeTetros(squares [][]string) []tetro {
 		// list of columns with content
 		colsToKeep := []int{}
 		cols := []int{0, 0, 0, 0}
-		for _, row := range sq {
+		for _, row := range bt {
 			for k, r := range row {
 				if r != '.' && r != '\n' {
 					cols[k]++
@@ -93,7 +93,7 @@ func makeTetros(squares [][]string) []tetro {
 		newTetro := make(tetro, len(rowsToKeep))
 		for i, row := range rowsToKeep {
 			for _, num := range colsToKeep {
-				newTetro[i] += string(sq[row][num])
+				newTetro[i] += string(bt[row][num])
 			}
 		}
 		tetros = append(tetros, newTetro)
@@ -104,9 +104,8 @@ func makeTetros(squares [][]string) []tetro {
 // checkBigTetros returns false if any of the tetroniminoes are invalid
 func checkBigTetros(bts [][]string) bool {
 
-	// check if all tetronominos have 4 cells
+	// check if all tetronominoes have 4 cells
 	for _, t := range bts {
-
 		nonEmpties := 0
 		for _, row := range t {
 			for _, r := range row {
@@ -115,7 +114,6 @@ func checkBigTetros(bts [][]string) bool {
 				}
 			}
 		}
-
 		if nonEmpties != 4 {
 			return false
 		}
@@ -130,17 +128,16 @@ func checkBigTetros(bts [][]string) bool {
 				if r != '.' {
 					adjoiningData := 0
 
-					if j > 0 && bts[i][j-1][k] != '.' {
+					if j > 0 && bts[i][j-1][k] != '.' { // if the cell below isn't empty
 						adjoiningData++
 					}
-					if j < len(t)-1 && bts[i][j+1][k] != '.' {
+					if j < len(t)-1 && bts[i][j+1][k] != '.' { // above
 						adjoiningData++
 					}
-
-					if k > 0 && bts[i][j][k-1] != '.' {
+					if k > 0 && bts[i][j][k-1] != '.' { // left
 						adjoiningData++
 					}
-					if k < len(row)-1 && bts[i][j][k+1] != '.' {
+					if k < len(row)-1 && bts[i][j][k+1] != '.' { // right
 						adjoiningData++
 					}
 
