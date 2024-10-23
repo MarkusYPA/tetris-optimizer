@@ -6,13 +6,13 @@ tetris-optimizer is a Go program and a solution to an exercise of the same name 
 
 The program reads tetronominoes (tetris blocks) from a provided text file, arranges them in as small a square as possible and prints out the resulting solution.
 
-The program can be used without compiling it:
+The program can be run directly:
 
 ```bash
 go run . "sample.txt"
 ```
 
-Compiling it to an executable is another option:
+Making an executable is another option:
 
 ```bash
 go build

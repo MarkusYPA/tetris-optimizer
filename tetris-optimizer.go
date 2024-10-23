@@ -118,13 +118,13 @@ func sideLen(tets []tetro) int {
 // a square as possible
 func main() {
 	if len(os.Args) != 2 {
-		fmt.Println("Provide one text file as argument")
+		fmt.Println("ERROR: Provide one text file as argument")
 		os.Exit(1)
 	}
 
 	bytes, err := os.ReadFile(os.Args[1])
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Println("ERROR:", err.Error())
 		os.Exit(1)
 	}
 
