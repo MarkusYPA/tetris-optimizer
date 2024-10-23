@@ -141,6 +141,10 @@ func main() {
 	square := placeTetros(side, tetros)
 
 	for _, row := range square {
-		fmt.Println(row)
+		for _, r := range row {
+			fmt.Print(string(r))
+		}
+		fmt.Println()
 	}
+	fmt.Println()
 }

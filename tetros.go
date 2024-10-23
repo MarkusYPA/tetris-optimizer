@@ -17,7 +17,7 @@ func (t tetro) height() int {
 
 // getBigTetros returns a slice of 4x4 squares from a string
 func getBigTetros(s string) [][]string {
-	squares := [][]string{{""}}
+	bigTetros := [][]string{{""}}
 	sqIndex := 0
 	sqRow := 0
 
@@ -25,7 +25,7 @@ func getBigTetros(s string) [][]string {
 
 		// start new square at two line changes
 		if i > 1 && r == '\n' && s[i-1] == '\n' {
-			squares = append(squares, []string{""})
+			bigTetros = append(bigTetros, []string{""})
 			sqRow = 0
 			sqIndex++
 			continue
@@ -34,20 +34,20 @@ func getBigTetros(s string) [][]string {
 		// start new row or add to current
 		if r == '\n' {
 			if sqRow != 3 {
-				squares[sqIndex] = append(squares[sqIndex], "")
+				bigTetros[sqIndex] = append(bigTetros[sqIndex], "")
 				sqRow++
 			}
 		} else {
 			if r == '.' {
-				squares[sqIndex][sqRow] += string(r)
+				bigTetros[sqIndex][sqRow] += string(r)
 			} else {
 				// Put letters in instead of #
-				squares[sqIndex][sqRow] += string(rune('A' + sqIndex))
+				bigTetros[sqIndex][sqRow] += string(rune('A' + sqIndex))
 			}
 		}
 
 	}
-	return squares
+	return bigTetros
 }
 
 // emptyRow checks if a string is only made up of '.':s

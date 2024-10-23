@@ -106,12 +106,12 @@ var testCasesGood = []testCaseGood{
 		input:    makeTetros(getBigTetros(fileToString("testcases/good03.txt"))),
 		expected: 5,
 	},
-	// The last case takes ~80 seconds to complete
-	/* 	{
+	// The last case takes ~5 seconds to complete
+	{
 		name:     "good hard",
 		input:    makeTetros(getBigTetros(fileToString("testcases/goodHard.txt"))),
 		expected: 1,
-	}, */
+	},
 }
 
 // countDots returns the numbers of dots (empty cells) in a square
